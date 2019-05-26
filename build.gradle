@@ -1,0 +1,10 @@
+buildscript {
+    repositories {
+        mavenLocal()
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public' }
+        mavenCentral()
+    }
+}
+
+group 'com.ygt.grpc-demo'
+version '1.0-SNAPSHOT'

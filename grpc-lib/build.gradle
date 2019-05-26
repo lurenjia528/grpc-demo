@@ -1,0 +1,64 @@
+buildscript {
+    repositories {
+        mavenLocal()
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public' }
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.google.protobuf:protobuf-gradle-plugin:0.8.8'
+    }
+}
+
+plugins {
+    id 'org.springframework.boot' version '2.1.5.RELEASE'
+    id 'java'
+    id 'idea'
+}
+
+apply plugin: 'com.google.protobuf'
+
+group = 'com.ygt.grpc-demo'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:3.8.0"
+    }
+    generatedFilesBaseDir = "$projectDir/src/generated"
+    clean {
+        delete generatedFilesBaseDir
+    }
+    plugins {
+        grpc {
+            artifact = "io.grpc:protoc-gen-grpc-java:1.21.0"
+        }
+    }
+    generateProtoTasks {
+        all()*.plugins {
+            grpc {}
+        }
+    }
+}
+
+repositories {
+    mavenLocal()
+    maven { url 'http://maven.aliyun.com/nexus/content/groups/public' }
+    mavenCentral()
+}
+
+dependencies {
+    compile "io.grpc:grpc-netty-shaded:1.18.0"
+    compile "io.grpc:grpc-protobuf:1.18.0"
+    compile "io.grpc:grpc-stub:1.18.0"
+}
+
+idea {
+    module {
+        sourceDirs += file("src/generated/main/java")
+        sourceDirs += file("src/generated/main/grpc")
+        generatedSourceDirs += file("src/generated/main/java")
+        generatedSourceDirs += file("src/generated/main/grpc")
+    }
+}

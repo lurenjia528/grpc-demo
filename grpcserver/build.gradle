@@ -1,0 +1,38 @@
+buildscript {
+    ext {
+        springBootVersion = '2.1.5.RELEASE'
+        springBootGrpcVersion = '2.3.0.RELEASE'
+    }
+    repositories {
+        mavenLocal()
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public' }
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+plugins {
+    id 'org.springframework.boot' version '2.1.5.RELEASE'
+    id 'java'
+}
+
+apply plugin: 'io.spring.dependency-management'
+
+group = 'com.ygt.grpcdemo'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+repositories {
+    mavenLocal()
+    maven { url 'http://maven.aliyun.com/nexus/content/groups/public' }
+    mavenCentral()
+}
+
+dependencies {
+    compile project(':grpc-lib')
+    compile("net.devh:grpc-server-spring-boot-starter:${springBootGrpcVersion}")
+    implementation 'org.springframework.boot:spring-boot-starter'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
